@@ -29,35 +29,14 @@ export const NAV: { group: string; items: { page: string; label: string; icon: I
     ],
   },
   { group: 'Assistant', items: [{ page: 'analyst', label: 'AI Analyst', icon: 'sparkle' }] },
+  {
+    group: 'Review',
+    items: [
+      { page: 'decisions', label: 'Decisions', icon: 'check' },
+      { page: 'report', label: 'Report', icon: 'table' },
+    ],
+  },
 ]
-
-type Theme = 'system' | 'light' | 'dark'
-const THEME_KEY = 'revenue-review-theme'
-
-function readTheme(): Theme {
-  try {
-    const t = localStorage.getItem(THEME_KEY)
-    return t === 'light' || t === 'dark' ? t : 'system'
-  } catch {
-    return 'system'
-  }
-}
-
-function useTheme() {
-  const [theme, setTheme] = useState<Theme>(readTheme)
-  useEffect(() => {
-    const root = document.documentElement
-    if (theme === 'system') root.removeAttribute('data-theme')
-    else root.setAttribute('data-theme', theme)
-    try {
-      localStorage.setItem(THEME_KEY, theme)
-    } catch {
-      // storage unavailable (private mode); theme still applies for this session
-    }
-  }, [theme])
-  const next: Record<Theme, Theme> = { system: 'light', light: 'dark', dark: 'system' }
-  return { theme, cycle: () => setTheme((t) => next[t]) }
-}
 
 export function AppShell({
   page,
@@ -73,7 +52,6 @@ export function AppShell({
   const [navOpen, setNavOpen] = useState(false)
   const menuButton = useRef<HTMLButtonElement>(null)
   const sidebar = useRef<HTMLElement>(null)
-  const { theme, cycle } = useTheme()
   useEffect(() => setNavOpen(false), [page])
   useEffect(() => {
     if (!navOpen) return
@@ -106,7 +84,6 @@ export function AppShell({
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [navOpen])
-  const themeIcon: IconName = theme === 'light' ? 'sun' : theme === 'dark' ? 'moon' : 'monitor'
   const current = NAV.flatMap((g) => g.items).find((i) => i.page === page)
 
   return (
@@ -171,25 +148,19 @@ export function AppShell({
           <div className="topbar-right">
             <span className="review-period"><Icon name="clock" size={15} /> Q2 / Q3 review</span>
             {meta && <SourceBadge isMock={meta.is_mock} />}
-            <button
-              type="button"
-              className="icon-btn"
-              onClick={cycle}
-              aria-label={`Theme: ${theme}. Click to change.`}
-              title={`Theme: ${theme}`}
-            >
-              <Icon name={themeIcon} />
-            </button>
           </div>
         </header>
-        {meta?.is_mock && (
-          <div className="mock-banner" role="note">
-            <Icon name="alert" size={16} />
-            <span>
-              <strong>Demo workspace</strong> Synthetic data for exploration. These figures are not assignment findings.
-            </span>
-          </div>
-        )}
+        <nav className="review-tabs" aria-label="Review tabs">
+          {[
+            { page: 'overview', label: 'Overview' },
+            { page: 'decisions', label: 'Decisions' },
+            { page: 'report', label: 'Report' },
+          ].map((tab) => (
+            <a key={tab.page} href={href(tab.page)} aria-current={page === tab.page ? 'page' : undefined}>
+              {tab.label}
+            </a>
+          ))}
+        </nav>
         <main id="main" className="content" tabIndex={-1}>
           {children}
         </main>

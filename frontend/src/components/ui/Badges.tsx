@@ -4,11 +4,8 @@ import { Icon, type IconName } from './Icon'
 // Status colour never carries meaning alone: every badge has an icon and a label.
 
 export function SourceBadge({ isMock }: { isMock: boolean }) {
-  return isMock ? (
-    <span className="badge badge-mock" title="Synthetic development data. Not findings from the assignment.">
-      <Icon name="alert" size={13} /> Mock data
-    </span>
-  ) : (
+  if (isMock) return null
+  return (
     <span className="badge badge-good">
       <Icon name="database" size={13} /> Assignment data
     </span>

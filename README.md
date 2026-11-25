@@ -95,10 +95,12 @@ var/app.db              generated, git-ignored
 | Retention & acquisition | Cohort heatmap with immature cohorts hatched (segment filter), weekly sign-ups and conversion, metric definitions |
 | Data quality | Status summary (click to filter), dashboard vs independent reconciliation, integrity checks, definitions |
 | AI Analyst | Chat-style analyst with evidence, confidence, limitations and next steps on every answer |
+| Decisions | Initiative decisions, evidence review steps and current dashboard context; mock recommendations remain pending |
+| Report | Quarterly summary of revenue, sign-ups, retention, bridge contributions, initiative status and caveats from the current API data |
 
 Every chart has a title with units and period, a legend for 2+ series, hover/keyboard tooltips, a
 **Table** toggle (no value is only reachable by hovering) and an **Explain** button that asks the analyst
-about that chart. Light and dark themes (toggle in the top bar; follows the OS by default).
+about that chart. A consistent light-only interface is used regardless of operating-system theme or previously saved preferences.
 
 ## API
 

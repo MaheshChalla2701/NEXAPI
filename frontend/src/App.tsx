@@ -8,6 +8,8 @@ import { useRoute } from './lib/router'
 import { AnalystPage } from './pages/AnalystPage'
 import { BridgePage } from './pages/BridgePage'
 import { DataQualityPage } from './pages/DataQualityPage'
+import { DecisionsPage } from './pages/DecisionsPage'
+import { ReportPage } from './pages/ReportPage'
 import { OnboardingPage } from './pages/OnboardingPage'
 import { OverviewPage } from './pages/OverviewPage'
 import { PricingPage } from './pages/PricingPage'
@@ -22,6 +24,8 @@ const PAGES: Record<string, () => React.JSX.Element> = {
   referrals: ReferralsPage,
   retention: RetentionPage,
   'data-quality': DataQualityPage,
+  decisions: DecisionsPage,
+  report: ReportPage,
 }
 
 export default function App() {
