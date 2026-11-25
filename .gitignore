@@ -1,0 +1,16 @@
+# generated database and build artefacts
+var/
+*.building
+frontend/node_modules/
+frontend/dist/
+__pycache__/
+*.pyc
+
+# secrets
+.env
+
+.DS_Store
+
+# generated synthetic dataset (reproducible with: python3 -m datagen.generate)
+data/*
+!data/README.md
